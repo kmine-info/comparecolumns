@@ -1,0 +1,452 @@
+{% extends "default_theme/base/__form_skeleton.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+
+
+
+
+{% block Style_sheets %}
+<link href="{% static "assets/css/jquery-linedtextarea.css" %}" type="text/css" rel="stylesheet" />
+<link href="{% static "assets/css/nav_tab.css" %}" type="text/css" rel="stylesheet" />
+<link href="{% static "assets/css/excel-bootstrap-table-filter-style.css" %}" type="text/css" rel="stylesheet" />
+
+<style>
+textarea {
+    
+    width: 100%;
+    //outline: none;
+}
+
+.TURQUOISE{
+background-color:TURQUOISE;
+}
+
+</style>
+
+{% endblock Style_sheets %}
+
+
+{% block Content_Area %}
+		 <div class="container-fluid mtb">
+		 <form method="post">{% csrf_token %}
+         <div class="row">
+	 	<br>
+	 		<div class="col-lg-10 col-lg-offset-1">
+	 		
+	 		<div class="col-md-6">
+	 		<h4>LookUp Field A</h4>
+	 		
+	 		
+		 	
+		 	{%render_field form.lookup_field1 class+="form-textarea lined_text" placeholder=ind_form.label %}
+		 
+	 		</div>
+	 		
+	 		<div class="col-md-6">
+	 		<h4>LookUp Field B</h4>
+		 	
+		 	{%render_field form.lookup_field2 class+="form-textarea lined_text" placeholder=ind_form.label %}
+	 		</div>
+	 		<div class="col-sm-12 text-center"><br><button type="submit" class="btn btn-theme ">Submit</button></div>
+	 		</div>
+	 		
+	 	</div>
+	 	</form>
+	 	
+	 	
+	 {%if field1 or field2%}	
+    <div class="mt">
+        <div class="col-lg-10 col-lg-offset-1">
+	 	
+	 	<div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1default" data-toggle="tab">A & B</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">A - B</a></li>
+                            <li><a href="#tab3default" data-toggle="tab">A in B</a></li>
+                            <li><a href="#tab4default" data-toggle="tab">B in A</a></li>
+                            <li><a href="#tab5default" data-toggle="tab">Symmetric</a></li>
+                            <!-- <li class="dropdown">
+                                <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#tab4default" data-toggle="tab">Default 4</a></li>
+                                    <li><a href="#tab5default" data-toggle="tab">Default 5</a></li>
+                                </ul>
+                            </li>  -->
+                        </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1default">
+                        
+     <div class="col-md-4">
+     
+     <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field A</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for field1result in field1%}
+          {%if field1result in intersection_result%}
+          <tr>
+            <td class="TURQUOISE">{{field1result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field1result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+      <div class="col-md-4">
+      <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field B</th>
+          </tr>
+        </thead>
+        <tbody>  
+          {%for field2result in field2%}
+          {%if field2result in intersection_result%}
+          <tr>
+            <td class="TURQUOISE">{{field2result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field2result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      
+      </div>              
+                        
+     <div class="col-md-4">                  
+     <table id="table1" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for union_val in union_result%}
+          <tr>
+            <td>{{union_val}}</td>
+            </tr>
+         {%endfor%}    
+        </tbody>
+      </table>
+      </div>              
+                        </div>
+                        <div class="tab-pane fade" id="tab2default">
+                        
+                        
+     <div class="col-md-4">
+     <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field A</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for field1result in field1%}
+          {%if field1result in intersection_result%}
+          <tr>
+            <td class="TURQUOISE">{{field1result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field1result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+      <div class="col-md-4">
+      <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field B</th>
+          </tr>
+        </thead>
+        <tbody>  
+          {%for field2result in field2%}
+          {%if field2result in intersection_result%}
+          <tr>
+            <td class="TURQUOISE">{{field2result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field2result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+                   
+                        
+     <div class="col-md-4">                  
+     <table id="table1" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for intersection_val in intersection_result%}
+          <tr>
+            <td>{{intersection_val}}</td>
+            </tr>
+         {%endfor%}    
+        </tbody>
+      </table>
+      </div>
+                        
+                        </div>
+                        <div class="tab-pane fade" id="tab3default">
+                        
+     
+     <div class="col-md-4">
+     <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field A</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for field1result in field1%}
+          {%if field1result in differnce_A_B_result%}
+          <tr>
+            <td class="TURQUOISE">{{field1result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field1result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+      <div class="col-md-4">
+      <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field B</th>
+          </tr>
+        </thead>
+        <tbody>  
+          {%for field2result in field2%}
+          {%if field2result in differnce_A_B_result%}
+          <tr>
+            <td class="aqua">{{field2result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field2result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+                   
+                        
+     <div class="col-md-4">                  
+     <table id="table1" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for differnce_A_B_val in differnce_A_B_result%}
+          <tr>
+            <td>{{differnce_A_B_val}}</td>
+            </tr>
+         {%endfor%}    
+        </tbody>
+      </table>
+      </div>
+                        
+                        </div>
+                        <div class="tab-pane fade" id="tab4default">
+                        
+                        
+     <div class="col-md-4">
+     <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field A</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for field1result in field1%}
+          {%if field1result in difference_B_A_result%}
+          <tr>
+            <td class="TURQUOISE">{{field1result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field1result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+      <div class="col-md-4">
+      <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field B</th>
+          </tr>
+        </thead>
+        <tbody>  
+          {%for field2result in field2%}
+          {%if field2result in difference_B_A_result%}
+          <tr>
+            <td class="TURQUOISE">{{field2result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field2result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+                    
+                        
+     <div class="col-md-4">                  
+     <table id="table1" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for difference_B_A_val in difference_B_A_result%}
+          <tr>
+            <td>{{difference_B_A_val}}</td>
+            </tr>
+         {%endfor%}    
+        </tbody>
+      </table>
+      </div>
+                        
+                        </div>
+                        <div class="tab-pane fade" id="tab5default">
+                        
+                         
+     <div class="col-md-4">
+     <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field A</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for field1result in field1%}
+          {%if field1result in Symmetric_difference_result%}
+          <tr>
+            <td class="TURQUOISE">{{field1result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field1result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+      <div class="col-md-4">
+      <table id="id_result" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Field B</th>
+          </tr>
+        </thead>
+        <tbody>  
+          {%for field2result in field2%}
+          {%if field2result in Symmetric_difference_result%}
+          <tr>
+            <td class="TURQUOISE">{{field2result}}</td>  
+          </tr>
+          {%else%}
+          <tr>
+            <td>{{field2result}}</td>  
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+      </div>
+                    
+                        
+     <div class="col-md-4">                  
+     <table id="table1" class="table table-bordered table-intel">
+        <thead>
+          <tr>
+            <th class="filter">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for Symmetric_difference_val in Symmetric_difference_result%}
+          <tr>
+            <td>{{Symmetric_difference_val}}</td>
+            </tr>
+         {%endfor%}    
+        </tbody>
+      </table>
+      </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+	 	
+	 	</div>
+	</div>
+	
+	{%endif%}
+	
+	 </div><!--/container -->
+{% endblock Content_Area %}
+	
+
+
+{% block Java_Scripts %}
+<script src="{% static "assets/js/jquery-linedtextarea.js" %}"></script>
+<script src="{% static "assets/js/excel-bootstrap-table-filter-bundle.js" %}"></script>
+
+<script>
+$(".lined_text").linedtextarea();
+</script>
+
+<script>
+    // Use the plugin once the DOM has been loaded.
+    $(function () {
+      // Apply the plugin 
+      
+      $('#id_result').excelTableFilter();
+      $('#table1').excelTableFilter();
+      $('#table2').excelTableFilter();
+      $('#table3').excelTableFilter();
+      $('#table4').excelTableFilter();
+      $('#table5').excelTableFilter();
+      
+    });
+  </script>
+
+{% endblock %}
