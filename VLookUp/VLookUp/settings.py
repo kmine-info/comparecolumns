@@ -25,7 +25,7 @@ SECRET_KEY = '1ntd5d0ino_1hf6)%b3v-$qffu(*2goekd3#71m)p=7(15qpg3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dev.kmine.com']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition

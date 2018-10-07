@@ -19,3 +19,4 @@ django_cache
 .pydevproject
 .settings
 share
+.Python
