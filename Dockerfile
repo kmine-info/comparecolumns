@@ -31,4 +31,4 @@ WORKDIR ${PROJECT_Folder}
  
 ADD . $PROJECT_Folder
  
-CMD ["/venv/bin/python", "./manage.py", "runserver", "0:8001"]
+CMD ["/venv/bin/python", "./VLookUp/manage.py", "runserver", "0:8001"]
