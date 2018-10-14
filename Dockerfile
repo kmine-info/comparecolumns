@@ -30,5 +30,7 @@ RUN set -ex \
 WORKDIR ${PROJECT_Folder}
  
 ADD . $PROJECT_Folder
+
+RUN  /venv/bin/python ./VLookUp/manage.py migrate
  
 CMD ["/venv/bin/python", "./VLookUp/manage.py", "runserver", "0:8001"]
