@@ -25,22 +25,22 @@ RUN set -ex \
     )" \
     && apk add --virtual .python-rundeps $runDeps \
     && apk del .build-deps
-RUN apk update 
-RUN apk add openrc --no-cache
 RUN apk add nginx
 
 WORKDIR ${PROJECT_Folder}
 
-RUN mkdir media static logs
 
+
+RUN mkdir -p /run/nginx
  
 ADD . $PROJECT_Folder
 
 WORKDIR src
 
+RUN mkdir media static logs
+
 COPY ./docker-entrypoint.sh /
-COPY ./django_nginx.conf /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/django_nginx.conf /etc/nginx/sites-enabled
+COPY ./django_nginx.conf /etc/nginx/conf.d/
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 ENTRYPOINT ["sh","/docker-entrypoint.sh"]

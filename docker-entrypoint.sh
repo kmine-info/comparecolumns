@@ -1,13 +1,9 @@
 #!/bin/bash
-export PROJECT_FOLDER=/kmine/Vlookup
+export PROJECT_FOLDER=/kmine/Vlookup/src
 export LOG_FOLDER=$PROJECT_FOLDER/logs
 export ERROR_LOG=$LOG_FOLDER/gunicorn.log
 export ACCESS_LOG=$LOG_FOLDER/access.log
 #export SOCKET_FILE=$
-
-
-
-
 
 # Prepare log files
 touch $ERROR_LOG
@@ -18,31 +14,25 @@ touch $ERROR_LOG
 tail -n 0 -f $LOG_FOLDER/*.log &
 
 
-echo Starting nginx 
-
-
-# Start Gunicorn processes
-echo Starting Gunicorn.
-
-
-cd $PROJECT_FOLDER/src
+cd $PROJECT_FOLDER
 
 /venv/bin/python manage.py migrate        # Apply database migrations
-#/venv/bin/python manage.py collectstatic --clear --noinput # clearstatic files
-#/venv/bin/python manage.py collectstatic --noinput  # collect static files
+/venv/bin/python manage.py collectstatic --clear --noinput # clearstatic files
+/venv/bin/python manage.py collectstatic --noinput  # collect static files
 
+echo Starting Gunicorn processes.
 
-
-exec /venv/bin/gunicorn VLookUp.wsgi:application \
+/venv/bin/gunicorn VLookUp.wsgi:application \
     --log-file=$ERROR_LOG \
     --access-logfile=$ACCESS_LOG  \
-    --bind 0.0.0.0:8000 \
+	--bind unix:vlookup_app.sock \
     --workers 3 \
     --log-level=info \
-    #--daemon 
-
-        #--name VLookUp \   # Name of this Gunicorn Application
+    --daemon
+    #--name VLookUp \   # Name of this Gunicorn Application
     #--bind unix:vlookup_app.sock \ # Binding to a local Unix Socket File
-#- \
+    #--bind 0.0.0.0:8000 \
 
-#exec service nginx start
+echo Starting nginx 
+
+nginx
