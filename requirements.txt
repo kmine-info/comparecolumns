@@ -1,5 +1,6 @@
 decorator==4.2.1
 Django~=1.11
+gunicorn==19.9.0
 django-widget-tweaks==1.4.1
 ipdb==0.9.3
 ipython==6.2.1

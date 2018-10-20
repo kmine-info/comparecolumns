@@ -13,6 +13,8 @@ RUN set -ex \
             musl-dev \
             linux-headers \
             pcre-dev \
+            postgresql-dev \
+            nginx \
     && pyvenv /venv \
     && /venv/bin/pip install -U pip \
     && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "/venv/bin/pip install --no-cache-dir -r /requirements.txt" \
@@ -25,10 +27,8 @@ RUN set -ex \
     )" \
     && apk add --virtual .python-rundeps $runDeps \
     && apk del .build-deps
-RUN apk update 
-RUN apk add openrc --no-cache
-RUN apk add nginx
-
+ 
+ 
 WORKDIR ${PROJECT_Folder}
 
 RUN mkdir media static logs
@@ -36,11 +36,10 @@ RUN mkdir media static logs
  
 ADD . $PROJECT_Folder
 
-WORKDIR src
+WORKDIR src/Vlookup
 
-COPY ./docker-entrypoint.sh /
-COPY ./django_nginx.conf /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/django_nginx.conf /etc/nginx/sites-enabled
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN  /venv/bin/python ./manage.py migrate
+ 
+#CMD ["/venv/bin/python", "./VLookUp/manage.py", "runserver", "0:8001"]
 
-ENTRYPOINT ["sh","/docker-entrypoint.sh"]
+CMD ["/venv/bin/gunicorn", "VLookUp.wsgi", "-b", "0.0.0.0:8000"]
