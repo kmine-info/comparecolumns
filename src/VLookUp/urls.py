@@ -15,8 +15,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-
+from VLookUpTool.views import Vlookup
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r"(?i)VLookUpTool/" , include("VLookUpTool.urls",namespace="VLookUpTool")),
+     url(r'^$', Vlookup.as_view(), name='vlookupform'),
 ]

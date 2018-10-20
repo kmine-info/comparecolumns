@@ -10,7 +10,8 @@
 <link href="{% static "assets/css/jquery-linedtextarea.css" %}" type="text/css" rel="stylesheet" />
 <link href="{% static "assets/css/nav_tab.css" %}" type="text/css" rel="stylesheet" />
 <link href="{% static "assets/css/excel-bootstrap-table-filter-style.css" %}" type="text/css" rel="stylesheet" />
-
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+<link src="//cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>
 <style>
 textarea {
     
@@ -18,6 +19,12 @@ textarea {
     //outline: none;
 }
 
+.cust_btn{
+	height: 20px;
+	font-size: 10px;
+	padding-top:2px; 
+	margin-bottom: 10px;
+}
 .TURQUOISE{
 background-color:TURQUOISE;
 }
@@ -48,7 +55,11 @@ background-color:TURQUOISE;
 		 	
 		 	{%render_field form.lookup_field2 class+="form-textarea lined_text" placeholder=ind_form.label %}
 	 		</div>
-	 		<div class="col-sm-12 text-center"><br><button type="submit" class="btn btn-theme ">Submit</button></div>
+	 		<div class="col-sm-12 text-center"><br><button type="submit" class="btn btn-theme ">Lookup &nbsp;<span class="glyphicon glyphicon-arrow-down"></span></button>
+	 		
+	 		
+	 		</div>
+	 		
 	 		</div>
 	 		
 	 	</div>
@@ -62,11 +73,11 @@ background-color:TURQUOISE;
 	 	<div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab1default" data-toggle="tab">A & B</a></li>
-                            <li><a href="#tab2default" data-toggle="tab">A - B</a></li>
-                            <li><a href="#tab3default" data-toggle="tab">A in B</a></li>
-                            <li><a href="#tab4default" data-toggle="tab">B in A</a></li>
-                            <li><a href="#tab5default" data-toggle="tab">Symmetric</a></li>
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Field A & Field B</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">Field A ( - ) Field B</a></li>
+                            <li><a href="#tab3default" data-toggle="tab">Field A not in Field B</a></li>
+                            <li><a href="#tab4default" data-toggle="tab">Field B not in Field A</a></li>
+                            <li><a href="#tab5default" data-toggle="tab">Symmetric Field A & Field B</a></li>
                             <!-- <li class="dropdown">
                                 <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -82,7 +93,7 @@ background-color:TURQUOISE;
                         
      <div class="col-md-4">
      
-     <table id="id_result" class="table table-bordered table-intel">
+     <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field A</th>
@@ -104,7 +115,7 @@ background-color:TURQUOISE;
       </table>
       </div>
       <div class="col-md-4">
-      <table id="id_result" class="table table-bordered table-intel">
+      <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field B</th>
@@ -128,7 +139,7 @@ background-color:TURQUOISE;
       </div>              
                         
      <div class="col-md-4">                  
-     <table id="table1" class="table table-bordered table-intel">
+     <table id="table" class="table resulttable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Result</th>
@@ -148,7 +159,7 @@ background-color:TURQUOISE;
                         
                         
      <div class="col-md-4">
-     <table id="id_result" class="table table-bordered table-intel">
+     <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field A</th>
@@ -170,7 +181,7 @@ background-color:TURQUOISE;
       </table>
       </div>
       <div class="col-md-4">
-      <table id="id_result" class="table table-bordered table-intel">
+      <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field B</th>
@@ -194,7 +205,7 @@ background-color:TURQUOISE;
                    
                         
      <div class="col-md-4">                  
-     <table id="table1" class="table table-bordered table-intel">
+     <table id="table" class="table resulttable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Result</th>
@@ -215,7 +226,7 @@ background-color:TURQUOISE;
                         
      
      <div class="col-md-4">
-     <table id="id_result" class="table table-bordered table-intel">
+     <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field A</th>
@@ -237,7 +248,7 @@ background-color:TURQUOISE;
       </table>
       </div>
       <div class="col-md-4">
-      <table id="id_result" class="table table-bordered table-intel">
+      <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field B</th>
@@ -261,7 +272,7 @@ background-color:TURQUOISE;
                    
                         
      <div class="col-md-4">                  
-     <table id="table1" class="table table-bordered table-intel">
+     <table id="table" class="table resulttable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Result</th>
@@ -282,7 +293,7 @@ background-color:TURQUOISE;
                         
                         
      <div class="col-md-4">
-     <table id="id_result" class="table table-bordered table-intel">
+     <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field A</th>
@@ -304,7 +315,7 @@ background-color:TURQUOISE;
       </table>
       </div>
       <div class="col-md-4">
-      <table id="id_result" class="table table-bordered table-intel">
+      <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field B</th>
@@ -328,7 +339,7 @@ background-color:TURQUOISE;
                     
                         
      <div class="col-md-4">                  
-     <table id="table1" class="table table-bordered table-intel">
+     <table id="table" class="table resulttable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Result</th>
@@ -349,7 +360,7 @@ background-color:TURQUOISE;
                         
                          
      <div class="col-md-4">
-     <table id="id_result" class="table table-bordered table-intel">
+     <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field A</th>
@@ -371,7 +382,7 @@ background-color:TURQUOISE;
       </table>
       </div>
       <div class="col-md-4">
-      <table id="id_result" class="table table-bordered table-intel">
+      <table id="id_result" class="table inputtable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Field B</th>
@@ -395,7 +406,7 @@ background-color:TURQUOISE;
                     
                         
      <div class="col-md-4">                  
-     <table id="table1" class="table table-bordered table-intel">
+     <table id="table5" class="table resulttable table-bordered table-intel">
         <thead>
           <tr>
             <th class="filter">Result</th>
@@ -409,19 +420,23 @@ background-color:TURQUOISE;
          {%endfor%}    
         </tbody>
       </table>
+      
       </div>
-                        
-                        </div>
+      
+            </div>
                     </div>
                 </div>
             </div>
 	 	
 	 	</div>
 	</div>
-	
+	  
 	{%endif%}
 	
+	
+	
 	 </div><!--/container -->
+	 
 {% endblock Content_Area %}
 	
 
@@ -429,6 +444,15 @@ background-color:TURQUOISE;
 {% block Java_Scripts %}
 <script src="{% static "assets/js/jquery-linedtextarea.js" %}"></script>
 <script src="{% static "assets/js/excel-bootstrap-table-filter-bundle.js" %}"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script src="//cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
 <script>
 $(".lined_text").linedtextarea();
@@ -436,17 +460,51 @@ $(".lined_text").linedtextarea();
 
 <script>
     // Use the plugin once the DOM has been loaded.
-    $(function () {
+     $(function () {
       // Apply the plugin 
       
-      $('#id_result').excelTableFilter();
-      $('#table1').excelTableFilter();
-      $('#table2').excelTableFilter();
-      $('#table3').excelTableFilter();
-      $('#table4').excelTableFilter();
-      $('#table5').excelTableFilter();
+      $('.inputtable').excelTableFilter();
+      $('.resulttable').excelTableFilter();
+     
       
-    });
+    }); 
+    
+    
+    
+    $(document).ready( function () {
+     
+      
+        $('.resulttable').DataTable( {
+        	"paging":false,
+             "info":false,
+             "searching":false,
+             
+            dom: 'Bfrtip',
+            buttons: [
+			{
+			    extend: "copy",
+			    title: "",
+			    className: "btn default cust_btn"
+			}, 
+			{
+	            extend: "csv",
+	            title: "",
+	            className: "btn default cust_btn"
+	        },
+            {
+	            extend: "print",
+	            title: "",
+	            className: "btn default cust_btn"
+	        }
+	        
+            ]
+        } );
+    } );
   </script>
+  
+  
+
+ 
+  
 
 {% endblock %}
