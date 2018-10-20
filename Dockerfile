@@ -29,7 +29,7 @@ RUN apk add nginx
 
 WORKDIR ${PROJECT_Folder}
 
-
+EXPOSE 80
 
 RUN mkdir -p /run/nginx
  
